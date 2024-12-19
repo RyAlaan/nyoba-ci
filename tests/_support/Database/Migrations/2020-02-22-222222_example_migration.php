@@ -22,10 +22,10 @@ class ExampleMigration extends Migration
             'deleted_at' => ['type' => 'datetime', 'null' => true],
         ]);
 
-        $this->forge->addKey('name');
-        $this->forge->addKey('uid');
-        $this->forge->addKey(['deleted_at', 'id']);
-        $this->forge->addKey('created_at');
+        $this->forge->addPrimaryKey('name');
+        $this->forge->addPrimaryKey('uid');
+        $this->forge->addPrimaryKey(['deleted_at', 'id']);
+        $this->forge->addPrimaryKey('created_at');
 
         $this->forge->createTable('factories');
     }
