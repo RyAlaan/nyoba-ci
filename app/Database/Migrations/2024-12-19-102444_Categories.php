@@ -18,8 +18,17 @@ class Categories extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 255,
             ],
-            'description' => [
-                'type' => 'TEXT',
+            'created_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
+            'deleted_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
             ],
         ]);
         $this->forge->addPrimaryKey('category_id');

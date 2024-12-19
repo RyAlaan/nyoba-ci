@@ -31,7 +31,19 @@ class Payments extends Migration
                 'type' => 'ENUM',
                 'constraint' => ['pending', 'completed', 'failed'],
                 'default' => 'pending',
-            ]
+            ],
+            'created_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
+            'deleted_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
         ]);
         $this->forge->addPrimaryKey('payment_id');
         $this->forge->addForeignKey('user_id', 'users', 'user_id', 'CASCADE', 'CASCADE');

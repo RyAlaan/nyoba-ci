@@ -26,6 +26,18 @@ class OrderItems extends Migration
                 'type' => 'DECIMAL',
                 'constraint' => '10,2',
             ],
+            'created_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
+            'deleted_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
         ]);
         $this->forge->addPrimaryKey('order_item_id');
         $this->forge->addForeignKey('product_id', 'products', 'product_id', 'CASCADE', 'NO ACTION');

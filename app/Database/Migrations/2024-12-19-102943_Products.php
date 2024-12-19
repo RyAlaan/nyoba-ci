@@ -22,6 +22,11 @@ class Products extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 255,
             ],
+            'slug' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'unique' => true
+            ],
             'description' => [
                 'type' => 'TEXT',
             ],
@@ -36,6 +41,18 @@ class Products extends Migration
             'image' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
+            ],
+            'created_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
+            'deleted_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
             ],
         ]);
         $this->forge->addPrimaryKey('product_id');
