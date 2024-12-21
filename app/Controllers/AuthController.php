@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Public;
+namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\User;
@@ -10,35 +10,35 @@ class AuthController extends BaseController
     protected $modelUser;
 
     // construct
-    public function __construct(User $user)
+    public function __construct()
     {
         helper(['form']);
-        $this->modelUser = $user;
+        $this->modelUser = new User();
     }
 
     /**
-     * return to login page
+     * return to Register page
      */
-    public function index()
+    public function RegisterPage()
     {
-        return view('page.login');
+        return view('pages/auth/register');
     }
 
     /**
      * create user data
      */
-    public function register()
+    public function Register()
     {
         // validation data
         $validation = $this->validate([
             'name' => 'required|max_length[30]',
-            'password' => 'required|max_length[255]|min_length[10]',
+            'password' => 'required|max_length[255]|min_length[7]',
             'passconf' => 'required|max_length[255]|matches[password]',
             'email'    => 'required|max_length[254]|is_unique[users.email]',
         ]);
 
         if (!$validation) {
-            return redirect()->back()->with('validation', $this->validator);
+            return redirect()->back()->with('validation', $this->validator->getErrors());
         }
 
         // create data
@@ -54,9 +54,17 @@ class AuthController extends BaseController
     }
 
     /**
+     * return to login page
+     */
+    public function LoginPage()
+    {
+        return view('pages/auth/login');
+    }
+
+    /**
      * authenticating user data
      */
-    public function login()
+    public function Login()
     {
         // validate data
         $validation = $this->validate([
@@ -79,18 +87,19 @@ class AuthController extends BaseController
         }
 
         // checking password
-        $pwd_verify = password_verify($password, $user->password);
+        $pwd_verify = password_verify($password, $user['password']);
 
         if (!$pwd_verify) {
+            dd('invalid email or password');
             return redirect()->back()->with('errors', ['password' => 'Invalid email or password']);
         }
 
         // creating session
         $session = session();
         $session->set([
-            'id' => $user->id,
-            'email' => $user->email,
-            'role' => $user->role,
+            'id' => $user['user_id'],
+            'email' => $user['email'],
+            'role' => $user['role'],
             'isLoggedIn' => TRUE,
         ]);
 

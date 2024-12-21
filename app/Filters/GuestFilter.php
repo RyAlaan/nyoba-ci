@@ -43,8 +43,8 @@ class GuestFilter implements FilterInterface
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         // check is user already login
-        if (!session()->get('isLoggedIn')) {
-            return redirect()->to('/auth/login');
+        if (session()->get('isLoggedIn')) {
+            return redirect()->to('/');
         }
     }
 }

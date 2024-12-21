@@ -26,7 +26,7 @@ class AuthFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         // check is user already logged in
-        if (session()->get('isLoggedIn')) {
+        if (!session()->get('isLoggedIn')) {
             return redirect()->to('/auth/login');
         }
     }
