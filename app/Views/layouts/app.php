@@ -10,7 +10,7 @@
     <?= $this->include('layouts/tailwindcdn') ?>
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-mulish antialiased">
     <div class="min-h-screen bg-gray-100">
         <?= $this->include('layouts/navigation'); ?>
 
@@ -19,6 +19,8 @@
             <?= $this->renderSection('content'); ?>
         </main>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 
 </html>
