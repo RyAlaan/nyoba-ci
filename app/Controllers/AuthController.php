@@ -42,9 +42,7 @@ class AuthController extends BaseController
         }
 
         // create data
-        $user = new User();
-
-        $user->insert([
+        $this->modelUser->insert([
             'name' => $this->request->getPost('name'),
             'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
             'email' => $this->request->getPost('email'),

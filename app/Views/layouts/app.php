@@ -7,20 +7,19 @@
     <title>RyStore - CodeIgniter</title>
 
     <!-- tailiwndcdn -->
-    <?= $this->include('layouts/tailwindcdn') ?>
+    <?= $this->include('layouts/bootstrap') ?>
 </head>
 
-<body class="font-mulish antialiased">
-    <div class="min-h-screen bg-gray-100 flex-row">
-        <?= strpos(uri_string(), 'dashboard') === false ? $this->include('layouts/navigation') : $this->include('layouts/sidebar') ?>
+<body class="font-mulish bg-light antialiased" id="body-pd">
 
-        <!-- Page Content -->
-        <main class="p-8 <?= strpos(uri_string(), 'dashboard') === false ? '' : 'ml-64' ?>">
-            <?= $this->renderSection('content'); ?>
-        </main>
-    </div>
+    <?= strpos(uri_string(), 'dashboard') === false ? $this->include('layouts/navbar') : $this->include('layouts/sidebar') ?>
 
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <!--Container Main start-->
+    <main style="margin-top: 5rem;" class="bg-white">
+        <?= $this->renderSection('content') ?>
+    </main>
+    <!--Container Main end-->
+
 </body>
 
 </html>
