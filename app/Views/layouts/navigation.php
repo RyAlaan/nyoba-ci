@@ -37,14 +37,16 @@
                 <li>
                     <a href="<?= site_url('/') ?>" class="" aria-current="page">Home</a>
                 </li>
-                <li>
-                    <a href="<?= site_url('/dashboard') ?>" class="" aria-current="page">Dashboard</a>
-                </li>
+                <?php if (session()->get('role') === 'admin') : ?>
+                    <li>
+                        <a href="<?= site_url('/dashboard') ?>" class="" aria-current="page">Dashboard</a>
+                    </li>
+                <?php endif; ?>
                 <li>
                     <a href="<?= site_url('/cart') ?>" class="" aria-current="page">Cart</a>
                 </li>
                 <li>
-                    <a href="<?= site_url('/auth/login') ?>" class="" aria-current="page">Login</a>
+                    <a href="<?= session()->get('id') ? site_url('auth/logout') : site_url('auth/login') ?>" class="" aria-current="page"><?= session()->get('id') ? 'Logout' : 'Login' ?></a>
                 </li>
             </ul>
         </div>

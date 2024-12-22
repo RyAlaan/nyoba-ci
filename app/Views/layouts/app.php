@@ -11,11 +11,11 @@
 </head>
 
 <body class="font-mulish antialiased">
-    <div class="min-h-screen bg-gray-100">
-        <?= $this->include('layouts/navigation'); ?>
+    <div class="min-h-screen bg-gray-100 flex-row">
+        <?= strpos(uri_string(), 'dashboard') === false ? $this->include('layouts/navigation') : $this->include('layouts/sidebar') ?>
 
         <!-- Page Content -->
-        <main>
+        <main class="p-8 <?= strpos(uri_string(), 'dashboard') === false ? '' : 'ml-64' ?>">
             <?= $this->renderSection('content'); ?>
         </main>
     </div>

@@ -5,11 +5,14 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-
-$routes->get('/', 'Home::index');
+$routes->get('/', 'HomeController::index');
 
 $routes->group('/', ['filter' => 'authFilter'], function ($routes) {
     $routes->get('auth/logout', 'AuthController::Logout');
+});
+
+$routes->group('dashboard', ['filter' => 'adminFilter'], function ($routes) {
+    $routes->get('/', 'DashboardController::index');
 });
 
 $routes->group('auth', ['filter' => 'guestFilter'], function ($routes) {
