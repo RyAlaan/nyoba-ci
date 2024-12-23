@@ -37,11 +37,11 @@ class UserController extends BaseController
         $query->where('role', 'user');
 
         // Pagination
-        $perPage = $request->getGet('perPage') ?? 10;
-        $page = $request->getGet('page') ?? 1;
+        $perPage = $request->getVar('perPage') ?? 10;
+        $page = $request->getVar('page') ?? 1;
 
         // Execute query
-        $users = $query->paginate($perPage, 'default', $page);
+        $users = $query->paginate(intval($perPage), 'default', intval($page));
 
         // Get the pager instance
         $page = \Config\Services::pager();

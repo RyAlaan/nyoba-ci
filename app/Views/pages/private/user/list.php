@@ -43,6 +43,43 @@
             </tbody>
         </table>
         <!--end: Datatable-->
+
+        <div class="row d-flex flex-row align-items-center justify-content-between">
+            <div class="col-3">
+                <p class="mb-0">showing <?php echo $users[0]['user_id'] ?> to <?php echo $users[count($users) - 1]['user_id'] ?> of <?php echo $page->getTotal(); ?> entries</p>
+            </div>
+
+            <!-- start: Pagination -->
+            <div class="col-3">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="<?php echo $page->getPreviousPageURI() ?>" tabindex="-1"><i class='bx bx-chevrons-left'></i></a>
+                        </li>
+                        <?php if ($page->getCurrentPage() - 1 > 0): ?>
+                            <li class="page-item">
+                                <a class="page-link" href="<?php echo $page->getPreviousPageURI() ?>"><?php echo $page->getCurrentPage() + -1 ?></a>
+                            </li>
+                        <?php endif; ?>
+                        <li class="page-item">
+                            <a class="page-link active" href="">
+                                <?php echo $page->getCurrentPage() ?>
+                            </a>
+                        </li>
+                        <?php if ($page->hasMore()): ?>
+                            <li class="page-item">
+                                <a class="page-link" href="<?php echo $page->getNextPageURI() ?>"><?php echo $page->getCurrentPage() + 1 ?></a>
+                            </li>
+                        <?php endif; ?>
+                        <li class="page-item">
+                            <a class="page-link" href="<?php echo $page->getNextPageURI() ?>"><i class='bx bx-chevrons-right'></i></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- end: Pagination -->
+        </div>
+
     </div>
 </div>
 
