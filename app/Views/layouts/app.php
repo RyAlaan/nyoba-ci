@@ -8,6 +8,16 @@
 
     <!-- tailiwndcdn -->
     <?= $this->include('layouts/bootstrap') ?>
+    <?php if (strpos(uri_string(), 'dashboard') !== false): ?>
+        <style>
+            @media screen and (min-width: 768px) {
+                body {
+                    margin: calc(var(--header-height) + 1rem) 0 0 0;
+                    padding-left: calc(var(--nav-width) + 2rem);
+                }
+            }
+        </style>
+    <?php endif; ?>
 </head>
 
 <body class="font-mulish bg-light antialiased" id="body-pd">

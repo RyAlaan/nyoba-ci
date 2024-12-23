@@ -17,15 +17,14 @@ $routes->group('/', ['filter' => 'authFilter'], function ($routes) {
 
 $routes->group('dashboard', ['filter' => 'adminFilter'], function ($routes) {
     $routes->get('/', [DashboardController::class, 'index']);
-
     $routes->get('customers', [UserController::class, 'index']);
 
     $routes->group('categories', function ($routes) {
         $routes->get('/', [CategoryController::class, 'index']);
-        $routes->post('/', [CategoryController::class, 'addCategory']);
-
-        $routes->get('/{category_id}', [CategoryController::class, 'editCategory']);
-        $routes->delete('/{category_id}', [CategoryController::class, 'deleteCategory']);
+        $routes->post('/', [CategoryController::class, 'create']);
+        $routes->get('(:any)', [CategoryController::class, 'edit/$1']);
+        $routes->post('(:any)', [CategoryController::class, 'update/$1']);
+        $routes->delete('(:num)', [CategoryController::class, 'delete/$1']);
     });
 });
 

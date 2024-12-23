@@ -24,14 +24,14 @@ class CategoryController extends BaseController
         $categories = $this->modelCategory->findAll();
 
         // return with categories data
-        return view('pages/private/categories', ['categories' => $categories]);
+        return view('pages/private/category/index', ['categories' => $categories]);
     }
 
     public function create()
     {
         // validate data
         $validation = $this->validate([
-            'name' => 'required',
+            'name' => 'required|is_unique[categories.name]',
         ]);
 
         if (!$validation) {
@@ -44,23 +44,47 @@ class CategoryController extends BaseController
         ]);
 
         // return 
-        return redirect('/categories')->with('success', 'category data created successfully');
+        return redirect()->to('/dashboard/categories')->with('success', 'category data created successfully');
     }
 
-    public function update($category_id)
+    public function edit($category_id)
     {
         $categories = $this->modelCategory->findAll();
         $category = $this->modelCategory->where('category_id', $category_id)->first();
 
-        return view('pages/private/categories', ['categories' => $categories, 'category' => $category]);
+        return view('pages/private/category/index', ['categories' => $categories, 'category' => $category]);
+    }
+
+    public function update($category_id)
+    {
+        // validate data
+        $validation = $this->validate([
+            'name' => 'required|is_unique[categories.name]',
+        ]);
+
+        if (!$validation) {
+            return redirect()->back()->with('validation', $this->validator->getErrors());
+        }
+
+        // create category
+        $result = $this->modelCategory->update($category_id, [
+            'name' => $this->request->getPost('name'),
+        ]);
+
+        if (!$result) {
+            return redirect()->back()->with('error', $result);
+        }
+
+        // return 
+        return redirect()->to('/dashboard/categories')->with('success', 'category data updated successfully');
     }
 
     public function delete($category_id)
     {
-        $result = $this->modelCategory->where('id', $category_id)->delete();
+        $result = $this->modelCategory->delete($category_id);
 
         if ($result) {
-            return Redirect('/category');
+            return redirect()->to('/dashboard/categories')->with('success', 'category data updated successfully');
         }
     }
 }

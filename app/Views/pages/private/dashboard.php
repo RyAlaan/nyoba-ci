@@ -2,30 +2,36 @@
 
 <?= $this->section('content'); ?>
 
-<div class="flex flex-row gap-x-10">
-    <div class="w-1/3 px-5 py-6 flex flex-row gap-x-2 bg-primary">
-        <i class="text-xl text-white fa-solid fa-users"></i>
-        <p class="font-bold text-white text-xl">
-            <?php  // $this->users->count() 
-            ?>
-            1 Users
-        </p>
+<div class="row">
+    <div class="col-12 col-lg-4">
+        <div class="p-2 d-flex flex-row align-items-center bg-primary text-white">
+            <i class="fa-solid fa-users text-white me-2 fs-3"></i>
+            <p class="font-weight-bold text-white fs-4 mb-0">
+                <?php // $this->users->count() 
+                ?>
+                1 Users
+            </p>
+        </div>
     </div>
-    <div class="w-1/3 px-5 py-6 flex flex-row gap-x-2 bg-primary">
-        <i class="text-xl text-white fa-solid fa-boxes-stacked"></i>
-        <p class="font-bold text-white text-xl">
-            <?php  // $this->users->count() 
-            ?>
-            1 Products
-        </p>
+    <div class="col-12 col-lg-4">
+        <div class="p-2 d-flex flex-row align-items-center bg-primary text-white">
+            <i class="fa-solid fa-boxes-stacked text-white me-2 fs-3"></i>
+            <p class="font-weight-bold text-white fs-4 mb-0">
+                <?php // $this->users->count() 
+                ?>
+                1 Products
+            </p>
+        </div>
     </div>
-    <div class="w-1/3 px-5 py-6 flex flex-row gap-x-2 bg-primary">
-        <i class="text-xl text-white fa-solid fa-bell"></i>
-        <p class="font-bold text-white text-xl">
-            <?php  // $this->users->count() 
-            ?>
-            1 Confirm Orders
-        </p>
+    <div class="col-12 col-lg-4">
+        <div class="p-2 d-flex flex-row align-items-center bg-primary text-white">
+            <i class="fa-solid fa-bell text-white me-2 fs-3"></i>
+            <p class="font-weight-bold text-white fs-4 mb-0">
+                <?php // $this->users->count() 
+                ?>
+                1 Confirm Orders
+            </p>
+        </div>
     </div>
 </div>
 

@@ -9,17 +9,15 @@
     <?= $this->include('layouts/bootstrap') ?>
 </head>
 
-<body>
-    <main class="w-full h-screen flex font-mulish <?= uri_string() === "auth/login" ? "flex-row" : "flex-row-reverse" ?>">
+<body style="overflow: hidden;" class="vh-100 d-flex flex-column overflow-none">
 
-        <div class="w-2/5 h-full flex items-center justify-center bg-primary">
-            <img class="w-[280px] aspect-square" src="/images/auth.png" alt="">
+    <div class="row flex-grow-1">
+        <div class="col-md-4 bg-primary d-flex align-items-center justify-content-center">
+            <img src="/images/auth.png" style="width: 280px;" class="img-fluid" alt="">
         </div>
+        <?= $this->renderSection('content')?>
+    </div>
 
-        <?= $this->renderSection('form'); ?>
-    </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 
 </html>
