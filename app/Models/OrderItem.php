@@ -7,13 +7,13 @@ use CodeIgniter\Model;
 class OrderItem extends Model
 {
     protected $table            = 'order_items';
-    protected $primaryKey       = 'order_item_id';
+    protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'product_id',
+        'id',
         'quantity',
         'price',
     ];

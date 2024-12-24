@@ -9,14 +9,13 @@ class Carts extends Migration
     public function up()
     {
         $this->forge->addField([
-            'cart_id' => [
-                'type' => 'INT',
+            'id' => [
+                'type' => 'BIGINT',
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
             'user_id' => [
-                'type' => 'INT',
-                'constraint' => 255,
+                'type' => 'BIGINT',
                 'unsigned' => true,
             ],
             'product_id' => [
@@ -41,9 +40,9 @@ class Carts extends Migration
                 'null' => true,
             ],
         ]);
-        $this->forge->addPrimaryKey('cart_id');
-        $this->forge->addForeignKey('user_id', 'users', 'user_id', 'CASCADE', 'NO ACTION');
-        $this->forge->addForeignKey('product_id', 'products', 'product_id', 'CASCADE', 'NO ACTION');
+        $this->forge->addPrimaryKey('id');
+        $this->forge->addForeignKey('user_id', 'users', 'id', 'CASCADE', 'NO ACTION');
+        $this->forge->addForeignKey('product_id', 'products', 'id', 'CASCADE', 'NO ACTION');
         $this->forge->createTable('carts');
     }
 

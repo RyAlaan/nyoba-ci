@@ -9,13 +9,12 @@ class Products extends Migration
     public function up()
     {
         $this->forge->addField([
-            'product_id' => [
+            'id' => [
                 'type' => 'VARCHAR',
-                'constraint' => 255,
-                'unique' => true,
+                'constraint' => 255, // Match the size of product_id in order_items
             ],
             'category_id' => [
-                'type' => 'INT',
+                'type' => 'BIGINT',
                 'unsigned' => true,
             ],
             'name' => [
@@ -25,7 +24,7 @@ class Products extends Migration
             'slug' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
-                'unique' => true
+                'unique' => true,
             ],
             'description' => [
                 'type' => 'TEXT',
@@ -55,10 +54,11 @@ class Products extends Migration
                 'null' => true,
             ],
         ]);
-        $this->forge->addPrimaryKey('product_id');
-        $this->forge->addForeignKey('category_id', 'categories', 'category_id', 'CASCADE', 'NO ACTION');
+        $this->forge->addPrimaryKey('id');
+        $this->forge->addForeignKey('category_id', 'categories', 'id', 'CASCADE', 'NO ACTION');
         $this->forge->createTable('products');
     }
+
 
     public function down()
     {

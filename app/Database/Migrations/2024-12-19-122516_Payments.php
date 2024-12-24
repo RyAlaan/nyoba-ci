@@ -9,13 +9,13 @@ class Payments extends Migration
     public function up()
     {
         $this->forge->addField([
-            'payment_id' => [
-                'type' => 'INT',
+            'id' => [
+                'type' => 'BIGINT',
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
             'user_id' => [
-                'type' => 'INT',
+                'type' => 'BIGINT',
                 'unsigned' => true,
             ],
             'payment_method' => [
@@ -45,8 +45,8 @@ class Payments extends Migration
                 'null' => true,
             ],
         ]);
-        $this->forge->addPrimaryKey('payment_id');
-        $this->forge->addForeignKey('user_id', 'users', 'user_id', 'CASCADE', 'CASCADE');
+        $this->forge->addPrimaryKey('id');
+        $this->forge->addForeignKey('user_id', 'users', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('payments');
     }
 

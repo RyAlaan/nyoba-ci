@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class Product extends Model
 {
     protected $table            = 'products';
-    protected $primaryKey       = 'product_id';
+    protected $primaryKey       = 'id';
     protected $useAutoIncrement = false;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
@@ -52,20 +52,26 @@ class Product extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+    public function category()
+    {
+        return $this->select('products.*, categories.name as category_name')
+            ->join('categories', 'categories.id = products.category_id', 'left');
+    }
+
     public function generateUniqueCode()
     {
-        // get dmy
+        // Ambil tanggal saat ini dalam format ddmmyy
         $date = date('dmY');
 
-        // get last row for that date
-        $query = $this->db->query("SELECT MAX(RIGHT(unique_code, 4)) as last_num FROM products WHERE unique_code LIKE '#$date%'");
-        $row = $query->getRow();
-        $lastNum = $row->last_num ? intval($row->last_num) + 1 : 1;
+        // Ambil nomor urut terakhir dari database (sesuaikan dengan tabel dan kolom Anda)
+        $last_id = $this->select('RIGHT(id, 4) as last_id')->orderBy('id', 'DESC')->first();
+        $last_number = $last_id ? $last_id->last_id : 0;
 
-        // formatting unique code
-        $code = '#' . $date . str_pad($lastNum, 4, '0', STR_PAD_LEFT);
+        // Increment nomor urut
+        $new_number = intval($last_number) + 1;
+        $formatted_number = str_pad($new_number, 4, '0', STR_PAD_LEFT);
 
-        // RETURN UNIQUE CODE
-        return $code;
+        // Gabungkan semua bagian menjadi kode ID lengkap
+        return '#' . $date . $formatted_number;
     }
 }

@@ -9,13 +9,13 @@ class Orders extends Migration
     public function up()
     {
         $this->forge->addField([
-            'order_id' => [
+            'id' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
                 'unique' => true,
             ],
             'user_id' => [
-                'type' => 'INT',
+                'type' => 'BIGINT',
                 'unsigned' => true,
             ],
             'total_price' => [
@@ -40,8 +40,8 @@ class Orders extends Migration
                 'null' => true,
             ],
         ]);
-        $this->forge->addPrimaryKey('order_id');
-        $this->forge->addForeignKey('user_id', 'users', 'user_id', 'CASCADE', 'NO ACTION');
+        $this->forge->addPrimaryKey('id');
+        $this->forge->addForeignKey('user_id', 'users', 'id', 'CASCADE', 'NO ACTION');
         $this->forge->createTable('orders');
     }
 

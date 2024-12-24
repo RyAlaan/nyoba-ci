@@ -9,8 +9,8 @@ class Users extends Migration
     public function up()
     {
         $this->forge->addField([
-            'user_id' => [
-                'type' => 'INT',
+            'id' => [
+                'type' => 'BIGINT',
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
@@ -53,7 +53,7 @@ class Users extends Migration
                 'null' => true,
             ],
         ]);
-        $this->forge->addPrimaryKey('user_id');
+        $this->forge->addPrimaryKey('id');
         $this->forge->addUniqueKey('email');
         $this->forge->addUniqueKey('phone');
         $this->forge->createTable('users');

@@ -48,7 +48,7 @@
     </div>
     <div class="row d-flex flex-row align-items-center justify-content-between">
         <div class="col-3">
-            <p class="mb-0">showing <?php echo $users[0]['user_id'] ?> to <?php echo $users[count($users) - 1]['user_id'] ?> of <?php echo $page->getTotal(); ?> entries</p>
+            <p class="mb-0">showing <?php echo $users[0]['id'] ?> to <?php echo $users[count($users) - 1]['id'] ?> of <?php echo $page->getTotal(); ?> entries</p>
         </div>
 
         <!-- start: Pagination -->

@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class Cart extends Model
 {
     protected $table            = 'carts';
-    protected $primaryKey       = 'cart_id';
+    protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;

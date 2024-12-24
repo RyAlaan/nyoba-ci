@@ -12,7 +12,7 @@ class AuthController extends BaseController
     // construct
     public function __construct()
     {
-        helper(['form']);
+        $this->helpers = ['form'];
         $this->modelUser = new User();
     }
 
@@ -95,7 +95,7 @@ class AuthController extends BaseController
         // creating session
         $session = session();
         $session->set([
-            'id' => $user['user_id'],
+            'id' => $user['id'],
             'name' => $user['name'],
             'email' => $user['email'],
             'role' => $user['role'],
