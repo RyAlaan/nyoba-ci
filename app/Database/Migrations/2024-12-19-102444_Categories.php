@@ -18,6 +18,10 @@ class Categories extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 255,
             ],
+            'icon' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => true,
