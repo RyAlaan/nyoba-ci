@@ -5,7 +5,8 @@ namespace App\Controllers\Private;
 use App\Controllers\BaseController;
 use App\Models\Category;
 use App\Models\Product;
-use CodeIgniter\HTTP\ResponseInterface;
+use Ramsey\Uuid\Uuid;
+use App\Helpers\create_slug;
 
 class ProductController extends BaseController
 {
@@ -29,7 +30,7 @@ class ProductController extends BaseController
         // filter by name
         if ($request->getGet('name')) {
             $name = $request->getGet('name');
-            $query->where('name', $name);
+            $query->where('products.name', $name);
         }
 
         // load category after filtering
@@ -61,19 +62,15 @@ class ProductController extends BaseController
             'description' => 'required',
             'price' => 'required|numeric',
             'stock' => 'required|numeric|min_length[0]',
-            'image' => 'uploaded[image]|is_image[image]|mime_in[image,image/png,image/jpeg]|max_size[image,2048]',
+            'image' => 'uploaded[image]|is_image[image]|mime_in[image,image/jpg,image/png,image/jpeg]|max_size[image,2048]',
         ]);
 
         if (!$validator) {
             return redirect()->back()->with('validation', $this->validator->getErrors());
         }
 
-        // call function slug in helpers
-        // helper(['create_slug']);
-
         $name = $this->request->getPost('name');
-        $slug = 'amba-dulu';
-        // $slug = create_slug($name);
+        $slug = create_slug($name);
 
         $categoryId = $this->request->getPost('category_id');
         $categoryExists = $this->modelCategory->find($categoryId);
@@ -88,12 +85,14 @@ class ProductController extends BaseController
         $filename = $image->getRandomName();
         $image->move(ROOTPATH . 'public/products', $filename);
 
+        $uuid = Uuid::uuid4()->toString();
+
         // insert data
         $result = $this->modelProduct->insert([
-            'id' => $this->modelProduct->generateUniqueCode(),
+            'id' => $uuid,
             'category_id' => $this->request->getPost('category_id'),
             'name' => $name,
-            'slug' => 'amba-dulu',
+            'slug' => $slug,
             'description' => $this->request->getPost('description'),
             'price' => $this->request->getPost('price'),
             'stock' => $this->request->getPost('stock'),
@@ -105,26 +104,27 @@ class ProductController extends BaseController
             return redirect()->back()->with('error', $this->modelProduct->errors());
         }
 
-        return redirect()->to(base_url('dashboard/products?name=' . $slug));
+        return redirect()->to(base_url('dashboard/products?name=' . $name));
     }
 
-    public function edit(int $id)
+    public function edit(string $id)
     {
         // get data by id
         $product = $this->modelProduct->find($id);
+        $categories = $this->modelCategory->findAll();
 
-        return view('pages/private/product/edit', ['product' => $product]);
+        return view('pages/private/product/edit', ['product' => $product, 'categories' => $categories]);
     }
 
-    public function update(int $id)
+    public function update(string $id)
     {
         // validate data
         $validator = $this->validate([
-            'name' => 'required|is_unique[products.name]',
+            'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'stock' => 'required|numeric|min:0',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'stock' => 'required|numeric|min_length[0]',
+            'image' => 'uploaded[image]|is_image[image]|mime_in[image,image/png,image/jpeg,image/jpg,]|max_size[image,2048]',
         ]);
 
         if (!$validator) {
@@ -135,33 +135,51 @@ class ProductController extends BaseController
         $name = $this->request->getPost('name');
         $slug = create_slug($name);
 
+        $product = $this->modelProduct->find($id);
+
         // update image
         $image = $this->request->getFile('image');
-        $filename = $image->getRandomName();
-        $image->move(ROOTPATH . 'public/products', $filename);
+        if ($image && $image->isValid() && !$image->hasMoved()) {
+            $filename = $image->getRandomName();
+
+            $image->move(ROOTPATH . 'public/products', $filename);
+
+            if (!empty($product['image']) && file_exists(ROOTPATH . 'public/products/' . $product['image'])) {
+                unlink(ROOTPATH . '/public/products/' . $product['image']);
+            }
+
+            $this->modelProduct->update($id, ['image' => $filename]);
+        }
 
         // insert data
-        $result = $this->modelProduct->save([
+        $result = $this->modelProduct->update($id, [
             'category_id' => $this->request->getPost('category_id'),
-            'name' => $this->request->getPost('name'),
+            'name' => $name,
             'slug' => $slug,
             'description' => $this->request->getPost('description'),
             'price' => $this->request->getPost('price'),
             'stock' => $this->request->getPost('stock'),
-            'image' => $image->getName(),
         ]);
 
         if (!$result) {
             return redirect()->back()->with('error', $this->modelProduct->errors());
         }
 
-        return redirect()->to(base_url('dashboard/products?name=' . $slug));
+        return redirect()->to(base_url('dashboard/products?name=' . $name));
     }
 
-    public function delete(int $id)
+    public function delete(string $id)
     {
+        $product = $this->modelProduct->find($id);
+
+        // delete image
+        if (!empty($product['image']) && file_exists(ROOTPATH . 'public/products/' . $product['image'])) {
+            unlink(ROOTPATH . 'public/products/' . $product['image']);
+        }
+
         // delete data
         $result = $this->modelProduct->delete($id);
+
 
         if (!$result) {
             return redirect()->back()->with('error', $this->modelProduct->errors());

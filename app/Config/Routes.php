@@ -23,18 +23,18 @@ $routes->group('dashboard', ['filter' => 'adminFilter'], function ($routes) {
     $routes->group('categories', function ($routes) {
         $routes->get('/', [CategoryController::class, 'index']);
         $routes->post('/', [CategoryController::class, 'create']);
-        $routes->get('/edit/(:any)', [CategoryController::class, 'edit/$1']);
-        $routes->post('/edit/(:any)', [CategoryController::class, 'update/$1']);
-        $routes->delete('/delete/(:num)', [CategoryController::class, 'delete/$1']);
+        $routes->get('(:any)', [CategoryController::class, 'edit/$1']);
+        $routes->post('(:any)', [CategoryController::class, 'update/$1']);
+        $routes->delete('(:num)', [CategoryController::class, 'delete/$1']);
     });
-    
+
     $routes->group('products', function ($routes) {
         $routes->get('/', [ProductController::class, 'index']);
         $routes->get('add', [ProductController::class, 'create']);
         $routes->post('add', [ProductController::class, 'store']);
-        $routes->get('edit/(:any)', [ProductController::class, 'edit/$1']);
-        $routes->post('edit/(:any)', [ProductController::class, 'update/$1']);
-        $routes->delete('delete/(:num)', [ProductController::class, 'delete/$1']);
+        $routes->get('(:any)', [ProductController::class, 'edit/$1']);
+        $routes->post('(:any)', [ProductController::class, 'update/$1']);
+        $routes->delete('(:any)', [ProductController::class, 'delete/$1']);
     });
 });
 

@@ -3,7 +3,7 @@
 <?= $this->section('content'); ?>
 
 <div class="row p-4 p-md-5 row-gap-4">
-    <form method="post" action="<?php echo isset($category) ? base_url('/dashboard/categories/' . $category['category_id']) : base_url('/dashboard/categories') ?>" class="row">
+    <form method="post" action="<?php echo isset($category) ? base_url('/dashboard/categories/' . $category['id']) : base_url('/dashboard/categories') ?>" class="row">
         <div class="col-8">
             <div class="row">
                 <label for="name"><?php echo isset($category) ? 'Edit category' : 'Add category' ?></label>
@@ -48,12 +48,13 @@
                     <tr>
                         <th scope="row"><?= $key + 1 ?></th>
                         <td><?= $category['name'] ?></td>
+                        <!-- issue -->
                         <td class="d-flex align-items-center gap-3">
-                            <a href="<?php echo base_url('/dashboard/categories/' . $category['category_id']) ?>" class="btn btn-warning btn-sm mr-2">
+                            <a href="<?php echo site_url('dashboard/categories/' . $category['id']) ?>" class="btn btn-warning btn-sm mr-2">
                                 <i class='bx bx-edit'></i>
                                 Edit
                             </a>
-                            <form method="post" action="<?php echo base_url('/dashboard/categories/' . $category['category_id']); ?>">
+                            <form method="post" action="<?php echo base_url('dashboard/categories/' . $category['id']); ?>">
                                 <?php csrf_field(); ?>
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit" class="btn btn-danger btn-sm" title='Delete'>

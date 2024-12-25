@@ -47,15 +47,15 @@ class CategoryController extends BaseController
         return redirect()->to('/dashboard/categories')->with('success', 'category data created successfully');
     }
 
-    public function edit($category_id)
+    public function edit($id)
     {
         $categories = $this->modelCategory->findAll();
-        $category = $this->modelCategory->where('category_id', $category_id)->first();
+        $category = $this->modelCategory->where('id', $id)->first();
 
         return view('pages/private/category/index', ['categories' => $categories, 'category' => $category]);
     }
 
-    public function update($category_id)
+    public function update($id)
     {
         // validate data
         $validation = $this->validate([
@@ -67,7 +67,7 @@ class CategoryController extends BaseController
         }
 
         // create category
-        $result = $this->modelCategory->update($category_id, [
+        $result = $this->modelCategory->update($id, [
             'name' => $this->request->getPost('name'),
         ]);
 
@@ -79,9 +79,9 @@ class CategoryController extends BaseController
         return redirect()->to('/dashboard/categories')->with('success', 'category data updated successfully');
     }
 
-    public function delete($category_id)
+    public function delete($id)
     {
-        $result = $this->modelCategory->delete($category_id);
+        $result = $this->modelCategory->delete($id);
 
         if ($result) {
             return redirect()->to('/dashboard/categories')->with('success', 'category data updated successfully');

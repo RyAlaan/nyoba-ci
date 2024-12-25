@@ -14,7 +14,6 @@ function create_slug(string $string): string
      * underscore
      * hyphens
      */
-
     $string = preg_replace('/[^a-zA-Z0-9 _-]/', '', $string);
 
     // convert all char into lowercase

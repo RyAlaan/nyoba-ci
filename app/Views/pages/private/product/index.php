@@ -38,11 +38,29 @@
                 <?php foreach ($products as $key => $product): ?>
                     <tr>
                         <th scope="row"><?= $key + 1 ?></th>
-                        <td><?= $product['name'] ?></td>
+                        <td>
+                            <div class="d-flex flex-row align-items-center gap-2">
+                                <img width="32" src="<?= base_url("/products/" . $product['image']) ?>" alt="<?= $product['name'] ?>">
+                                <p><?= $product['name'] ?></p>
+                            </div>
+                        </td>
                         <td><?= $product['category_name'] ?></td>
                         <td><?= $product['price'] ?></td>
                         <td><?= $product['stock'] ?></td>
-                        <td>edit delete</td>
+                        <td width="15%">
+                            <div class="d-flex flex-row algin-items-center gap-2">
+                                    <a href="<?php echo base_url('dashboard/products/' . $product['id']) ?>" class="btn btn-warning btn-sm mr-2">
+                                        <i class='bx bx-edit'></i>
+                                        Edit
+                                    </a>
+                                <form method="post" action="<?php echo base_url('dashboard/products/' . $product['id']); ?>">
+                                    <?php csrf_field(); ?>
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn btn-danger btn-sm" title='Delete'>
+                                        <i class='bx bx-trash'></i> Delete</button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

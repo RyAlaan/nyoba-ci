@@ -25,13 +25,13 @@ class UserController extends BaseController
         // filter by name
         if ($request->getGet('name')) {
             $name = $request->getGet('name');
-            $query->where('name', $name);
+            $query->where('users.name', $name);
         }
 
         // filtering by email
         if ($request->getGet('email')) {
             $email = $request->getGet('email');
-            $query->where('email', $email);
+            $query->where('users.email', $email);
         }
 
         $query->where('role', 'user');
