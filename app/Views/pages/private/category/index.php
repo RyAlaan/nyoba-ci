@@ -6,13 +6,28 @@
     <form method="post" action="<?php echo isset($category) ? base_url('/dashboard/categories/' . $category['id']) : base_url('/dashboard/categories') ?>" class="row">
         <div class="col-8">
             <div class="row">
-                <label for="name"><?php echo isset($category) ? 'Edit category' : 'Add category' ?></label>
-                <?php if (session()->has('validation')) :  foreach (session()->getFlashdata('validation') as $error) : ?>
-                        <p class="text-danger"><?= esc($error) ?></p>
-                <?php endforeach;
-                endif; ?>
+                <div class="col-12 col-md-6">
+                    <div class="row">
+                        <label for="name"><?php echo isset($category) ? 'Edit category' : 'Add category' ?></label>
+                        <?php if (session()->has('validation')) :  foreach (session()->getFlashdata('validation') as $error) : ?>
+                                <p class="text-danger"><?= esc($error) ?></p>
+                        <?php endforeach;
+                        endif; ?>
+                    </div>
+                    <input class="form-control-sm form-control" type="text" value="<?php echo isset($category) ? $category['name'] : "" ?>" name="name" id="">
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="row">
+                        <label for="icon"><?php echo isset($category) ? 'Edit icon' : 'Add icon' ?></label>
+                        <?php if (session()->has('validation')) :  foreach (session()->getFlashdata('validation') as $error) : ?>
+                                <p class="text-danger"><?= esc($error) ?></p>
+                        <?php endforeach;
+                        endif; ?>
+                    </div>
+                    <input class="form-control-sm form-control" type="text" name="icon" value="<?php echo isset($category) ? $category['icon'] : "" ?>" icon="icon" id="">
+                </div>
+                
             </div>
-            <input class="form-control-sm form-control" type="text" value="<?php echo isset($category) ? $category['name'] : "" ?>" name="name" id="">
         </div>
         <div class="col-4 d-flex flex-row align-items-end justify-content-end">
             <button type="submit" class="btn btn-primary fw-bold"><?php echo isset($category) ? 'Edit category' : 'Add category' ?></button>
@@ -39,7 +54,8 @@
             <thead>
                 <tr>
                     <th width="10%">#</th>
-                    <th width="70%">Name</th>
+                    <th width="10%">Icon</th>
+                    <th width="60%">Name</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -47,6 +63,7 @@
                 <?php foreach ($categories as $key => $category): ?>
                     <tr>
                         <th scope="row"><?= $key + 1 ?></th>
+                        <td><i class="<?= $category['icon'] ?>"></i></td>
                         <td><?= $category['name'] ?></td>
                         <!-- issue -->
                         <td class="d-flex align-items-center gap-3">

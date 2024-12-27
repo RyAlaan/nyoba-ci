@@ -11,7 +11,7 @@ class Products extends Migration
         $this->forge->addField([
             'id' => [
                 'type' => 'VARCHAR',
-                'constraint' => 255, // Match the size of product_id in order_items
+                'constraint' => 255,
             ],
             'category_id' => [
                 'type' => 'BIGINT',

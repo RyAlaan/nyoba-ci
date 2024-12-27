@@ -13,7 +13,8 @@ class Category extends Model
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'name'
+        'name',
+        'icon'
     ];
 
     protected bool $allowEmptyInserts = false;

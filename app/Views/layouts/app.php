@@ -20,12 +20,12 @@
     <?php endif; ?>
 </head>
 
-<body class="font-mulish bg-white antialiased" id="body-pd" style="overflow-x: hidden;">
+<body class="font-mulish antialiased bg-white" id="body-pd" style="overflow-x: hidden;">
 
     <?= strpos(uri_string(), 'dashboard') === false ? $this->include('layouts/navbar') : $this->include('layouts/sidebar') ?>
 
     <!--Container Main start-->
-    <main style="<?= strpos(uri_string(), 'dashboard') === false ? "margin-top : 5-rem" : "overflow-x: hidden;" ?>" class="container-xxl">
+    <main class="container-xxl <?= strpos(uri_string(), 'dashboard') === false ? "mt-5" : "overflow-x-hidden" ?>">
         <?= $this->renderSection('content') ?>
     </main>
     <!--Container Main end-->
@@ -80,6 +80,7 @@
         </footer>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

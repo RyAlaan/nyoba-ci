@@ -9,7 +9,7 @@
 
     <div class="mt-5 d-flex flex-column align-items-center justify-content-center">
         <h1 class="fw-bold fs-1">Find something here</h1>
-        <a class="btn btn-dark fw-bold rounded-pill" href="<?= site_url('/products') ?>">Shop Now!</a>
+        <a class="btn btn-dark fw-bold rounded-pill" href="<?= site_url('/product') ?>">Shop Now!</a>
     </div>
 
     <div class="row mt-5">
@@ -21,7 +21,7 @@
         </div>
         <div class="row mt-4">
             <?php foreach ($categories as $key => $category): ?>
-                <a href="<?= site_url('/products?category=' . $category['name']) ?>" class="col-2 text-decoration-none text-dark">
+                <a href="<?= site_url('/product?category=' . $category['name']) ?>" class="col-2 text-decoration-none text-dark">
                     <div class="item d-flex flex-column align-items-center justify-content-center border rounded py-4">
                         <i class='fs-1 <?= $category['icon'] ?>'></i>
                         <p class="fw-bolder mb-0"><?= $category['name'] ?></p>
@@ -43,8 +43,10 @@
         <div class="col-12">
             <div class="row mt-4 ">
                 <?php foreach ($products as $key => $product): ?>
-                    <a href="<?= site_url('/products/' . $product['slug']) ?>" class="col-3 text-decoration-none text-dark">
-                        <img style="width: 100%; aspect-ratio: 1/1;" src="<?= site_url('/products/' . $product['image']) ?>" alt="" srcset="">
+                    <a href="<?= site_url('/product/' . $product['slug']) ?>" class="col-3 text-decoration-none text-dark">
+                        <div class="ratio ratio-1x1">
+                            <img src="<?= site_url('/products/' . $product['image']) ?>" alt="" srcset="" class="object-fit-contain bg-light">
+                        </div>
                         <div class="item d-flex flex-column py-3">
                             <p class="fw-bolder mb-0"><?= $product['name'] ?></p>
                             <p class="fw-bolder text-secondary mb-0"><?= $product['category_name'] ?></p>

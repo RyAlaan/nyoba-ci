@@ -88,7 +88,6 @@ class AuthController extends BaseController
         $pwd_verify = password_verify($password, $user['password']);
 
         if (!$pwd_verify) {
-            dd('invalid email or password');
             return redirect()->back()->with('errors', ['password' => 'Invalid email or password']);
         }
 

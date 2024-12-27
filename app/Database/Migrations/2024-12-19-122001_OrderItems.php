@@ -11,11 +11,15 @@ class OrderItems extends Migration
         $this->forge->addField([
             'id' => [
                 'type' => 'VARCHAR',
-                'constraint' => 255, // Unique string ID
+                'constraint' => 255,
+            ],
+            'order_id' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
             ],
             'product_id' => [
                 'type' => 'VARCHAR',
-                'constraint' => 255, // Match the size of products.id
+                'constraint' => 255,
             ],
             'quantity' => [
                 'type' => 'INT',
@@ -38,7 +42,8 @@ class OrderItems extends Migration
             ],
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->addForeignKey('product_id', 'products', 'id', 'CASCADE', 'NO ACTION'); // Ensure consistency here
+        $this->forge->addForeignKey('product_id', 'products', 'id', 'CASCADE', 'NO ACTION');
+        $this->forge->addForeignKey('order_id  ', 'orders', 'id', 'CASCADE', 'RESTRICT');
         $this->forge->createTable('order_items');
     }
 

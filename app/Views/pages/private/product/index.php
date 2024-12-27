@@ -45,7 +45,7 @@
                             </div>
                         </td>
                         <td><?= $product['category_name'] ?></td>
-                        <td><?= $product['price'] ?></td>
+                        <td><?= number_format($product['price'], 2, ',', '.') ?></td>
                         <td><?= $product['stock'] ?></td>
                         <td width="15%">
                             <div class="d-flex flex-row algin-items-center gap-2">

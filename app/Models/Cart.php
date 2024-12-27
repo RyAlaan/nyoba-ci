@@ -47,4 +47,19 @@ class Cart extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function Products()
+    {
+        return $this->select(
+            'carts.*, products.id AS product_id,
+            products.name AS product_name,
+            products.price AS product_price,
+            products.stock AS products_stock,
+            products.image AS product_image,
+            categories.id AS category_id,
+            categories.name AS categories_name',
+        )
+            ->join('products', 'carts.product_id = products.id')
+            ->join('categories', 'products.category_id = categories.id');
+    }
 }
