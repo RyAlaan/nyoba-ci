@@ -54,7 +54,7 @@ class Cart extends Model
             'carts.*, products.id AS product_id,
             products.name AS product_name,
             products.price AS product_price,
-            products.stock AS products_stock,
+            products.stock AS product_stock,
             products.image AS product_image,
             categories.id AS category_id,
             categories.name AS categories_name',

@@ -5,6 +5,7 @@ use App\Controllers\Private\DashboardCategory;
 use App\Controllers\Private\DashboardController;
 use App\Controllers\Private\DashboardProduct;
 use App\Controllers\Private\DashboardUser;
+use App\Controllers\ProfileController;
 use App\Controllers\Public\HomeController;
 use App\Controllers\Public\ProductController;
 use CodeIgniter\Router\RouteCollection;
@@ -19,11 +20,25 @@ $routes->group('product', function ($routes) {
     $routes->get('(:any)', [ProductController::class, 'show']);
 });
 
-$routes->group('carts', function($routes) {
-    $routes->get('/', [CartController::class, 'index']);
+$routes->group('auth', ['filter' => 'guestFilter'], function ($routes) {
+    $routes->get('login', 'AuthController::LoginPage');
+    $routes->post('login', 'AuthController::Login');
+
+    $routes->get('register', 'AuthController::RegisterPage');
+    $routes->post('register', 'AuthController::Register');
 });
 
 $routes->group('/', ['filter' => 'authFilter'], function ($routes) {
+    $routes->group('carts', function ($routes) {
+        $routes->get('/', [CartController::class, 'index']);
+        $routes->post('add-to-cart', [CartController::class, 'create']);
+        $routes->post('order', [CartController::class, 'order']);
+        $routes->delete('delete/(:num)', [CartController::class, 'delete/$1']);
+    });
+
+    $routes->get('profile', [ProfileController::class, 'index']);
+    $routes->put('profile', [ProfileController::class, 'update']);
+
     $routes->get('auth/logout', 'AuthController::Logout');
 });
 
@@ -47,12 +62,4 @@ $routes->group('dashboard', ['filter' => 'adminFilter'], function ($routes) {
         $routes->post('(:any)', [DashboardProduct::class, 'update/$1']);
         $routes->delete('(:any)', [DashboardProduct::class, 'delete/$1']);
     });
-});
-
-$routes->group('auth', ['filter' => 'guestFilter'], function ($routes) {
-    $routes->get('login', 'AuthController::LoginPage');
-    $routes->post('login', 'AuthController::Login');
-
-    $routes->get('register', 'AuthController::RegisterPage');
-    $routes->post('register', 'AuthController::Register');
 });

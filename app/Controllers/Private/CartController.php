@@ -6,7 +6,6 @@ use App\Controllers\BaseController;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\User;
-use CodeIgniter\HTTP\ResponseInterface;
 
 class CartController extends BaseController
 {
@@ -25,11 +24,10 @@ class CartController extends BaseController
 
     public function index()
     {
-
         // check is session any
         if ($id = session()->get('id')) {
             // get cart data by session id
-            $carts = $this->modelCart->where('user_id', $id)->products();
+            $carts = $this->modelCart->where('user_id', $id)->products()->findAll();
 
             return view('pages/private/cart/index', ['carts' => $carts]);
         } else {
@@ -41,7 +39,6 @@ class CartController extends BaseController
     {
         $validator = $this->validate([
             'product_id' => 'required',
-            'quantity' => 'required|min_value[1]',
         ]);
 
         if (!$validator) {
@@ -49,39 +46,49 @@ class CartController extends BaseController
         }
 
         $product_id = $this->request->getPost('product_id');
+        $user_id = session()->get('id');
 
-        $product = $this->modelProduct->where('id', $product_id)->first();
+        $isExist = $this->modelCart->where('user_id', $user_id)->where('product_id', $product_id)->first();
 
-        if (!$product) {
-            return redirect()->back()->with('error', 'we cannot process this product, please try again later or contact admin');
-        } elseif ($this->request->getPost('quantity') > $product['stock']) {
-            return redirect()->back()->with('error', 'quantity cannot higher than' . $product['stock']);
+        if ($isExist) {
+            $data = [
+                'quantity' => $isExist['quantity'] + 1
+            ];
+
+            $cart = $this->modelCart->update($isExist['id'], $data);
+
+            if (!$cart) {
+                return redirect()->back()->with('error', 'cannot update cart for the moment, please try again later or contact admin');
+            }
+
+            return redirect('carts')->with('success', 'The product quantity has been successfully increased');
+        } else {
+            $cart = $this->modelCart->insert([
+                'user_id' => session()->get('id'),
+                'product_id' => $product_id,
+                'quantity' => 1,
+            ]);
+
+            if (!$cart) {
+                return redirect()->back()->with('error', 'cannot add to cart for the moment, please try again later or contact admin');
+            }
+
+            return redirect('carts')->with('success', 'The product has been successfully added to the cart');
         }
-
-        $cart = $this->modelCart->insert([
-            'user_id' => session()->get('id'),
-            'product_id' => $product_id,
-            'quantity' => $this->request->getPost('quantity'),
-        ]);
-
-        if (!$cart) {
-            return redirect()->back()->with('error', 'cannot add to cart for the moment, please try again later or contact admin');
-        }
-
-        return redirect('carts');
     }
 
     public function order()
     {
-        // Check user detail sudah di isi
+        // check is user address && phone not empty
         $user_id = session()->get('id');
-        $user = $this->modelUser->where('id', $user_id);
+        $user = $this->modelUser->where('id', $user_id)->first();
         if (!$user['phone'] || !$user['address']) {
             return redirect()->to('profile')->with('error', 'please complete your information first');
         }
 
         // Check user belum centang product  
         $data = $this->request->getPost('selected_product');
+        dd('data');
         $nData = 0;
 
         foreach ($data as $value) {
@@ -97,7 +104,7 @@ class CartController extends BaseController
         //
     }
 
-    public function remove($cart_id)
+    public function delete($cart_id)
     {
         $cart = $this->modelCart->where('id', $cart_id);
 

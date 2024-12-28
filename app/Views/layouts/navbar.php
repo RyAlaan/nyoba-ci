@@ -26,7 +26,7 @@
                 </li>
             </ul>
             <div class="d-flex align-items-center justify-content-center">
-                <p class="fw-bolder"><?= session()->get('name') ?></p>
+                <a href="<?= site_url('profile') ?>" class="fw-bolder text-decoration-none text-black"><?= session()->get('name') ?></a>
             </div>
         </div>
     </div>

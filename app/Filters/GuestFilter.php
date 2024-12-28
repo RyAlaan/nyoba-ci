@@ -25,7 +25,10 @@ class GuestFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        //
+        // check is user already login
+        if (session()->get('isLoggedIn')) {
+            return redirect()->to('/');
+        }
     }
 
     /**
@@ -42,9 +45,6 @@ class GuestFilter implements FilterInterface
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        // check is user already login
-        if (session()->get('isLoggedIn')) {
-            return redirect()->to('/');
-        }
+        //
     }
 }

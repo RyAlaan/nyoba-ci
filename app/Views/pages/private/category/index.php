@@ -71,7 +71,7 @@
                                 <i class='bx bx-edit'></i>
                                 Edit
                             </a>
-                            <form method="post" action="<?php echo base_url('dashboard/categories/' . $category['id']); ?>">
+                            <form method="post" action="<?= base_url('dashboard/categories/' . $category['id']); ?>">
                                 <?php csrf_field(); ?>
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit" class="btn btn-danger btn-sm" title='Delete'>

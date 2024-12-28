@@ -21,7 +21,6 @@ class Carts extends Migration
             'product_id' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
-                'unique' => true,
             ],
             'quantity' => [
                 'type' => 'INT',
