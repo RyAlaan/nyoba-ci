@@ -48,7 +48,7 @@ class Cart extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function Products()
+    public function products()
     {
         return $this->select(
             'carts.*, products.id AS product_id,

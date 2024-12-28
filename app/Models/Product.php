@@ -52,6 +52,7 @@ class Product extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+
     public function category()
     {
         return $this->select('products.*, categories.name as category_name')

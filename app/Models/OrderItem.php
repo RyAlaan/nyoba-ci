@@ -13,7 +13,6 @@ class OrderItem extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'id',
         'order_id',
         'product_id',
         'quantity',

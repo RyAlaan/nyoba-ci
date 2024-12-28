@@ -7,7 +7,7 @@
     <input type="text" name="_method" value="PUT" hidden>
     <div class="row">
         <?php if (session()->getFlashdata('error')) : ?>
-            <?= $this->include('components/error-notification') ?>
+            <?= $this->include('components/error_notification') ?>
         <?php endif; ?>
 
         <div class="col-12">

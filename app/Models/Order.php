@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Orders extends Model
+class Order extends Model
 {
     protected $table            = 'orders';
     protected $primaryKey       = 'id';
@@ -14,6 +14,7 @@ class Orders extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
         'id',
+        'user_id',
         'total_price',
         'status',
     ];

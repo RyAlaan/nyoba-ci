@@ -4,14 +4,19 @@ namespace App\Controllers\Private;
 
 use App\Controllers\BaseController;
 use App\Models\Cart;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\User;
+use Ramsey\Uuid\Nonstandard\Uuid;
 
 class CartController extends BaseController
 {
     protected $modelCart;
     protected $modelProduct;
     protected $modelUser;
+    protected $modelOrder;
+    protected $modelOrderItem;
 
     public function __construct()
     {
@@ -20,6 +25,8 @@ class CartController extends BaseController
         $this->modelCart = new Cart();
         $this->modelProduct = new Product();
         $this->modelUser = new User();
+        $this->modelOrder = new Order();
+        $this->modelOrderItem = new OrderItem();
     }
 
     public function index()
@@ -86,22 +93,53 @@ class CartController extends BaseController
             return redirect()->to('profile')->with('error', 'please complete your information first');
         }
 
-        // Check user belum centang product  
-        $data = $this->request->getPost('selected_product');
-        dd('data');
-        $nData = 0;
+        // Check is cart empty  
+        $data = $this->request->getPost('selected_products');
+        $quantities = $this->request->getPost('quantities');
 
-        foreach ($data as $value) {
-            if ($value->checked == 1) {
-                $nData++;
-            }
-        }
-
-        if ($nData === 0) {
+        if (!$data) {
             return redirect()->back()->with('error', 'please select product first');
         }
 
-        //
+        // create order data
+        $totalPrice = 0;
+        $order_id = Uuid::uuid4()->toString();
+
+        $this->modelOrder->create([
+            'id' => $order_id,
+            'user_id' => $user_id,
+            'total_price' => $totalPrice,
+            'status' => 'pending',
+        ]);
+
+        foreach ($data as $product_id) {
+            $product = $this->modelProduct->where('id', $product_id)->find();
+
+            if ($quantities[$product_id] <= $product['stock']) {
+                $this->modelOrderItem->insert([
+                    'order_id' => $order_id,
+                    'product_id' => $product_id,
+                    'quantity' => $quantities[$product_id],
+                    'price' => $product['price'] * $quantities[$product_id],
+                ]);
+
+                $totalPrice += $product['price'] * $quantities[$product_id];
+
+                $this->modelCart->where('user_id', $user_id)->where('product_id', $product_id)->delete();
+                $this->modelProduct->where('product_id', $product_id)->update(['stock' => $product['stock'] - $quantities[$product_id]]);
+            }
+        }
+
+        if ($totalPrice > 0) {
+            $this->modelOrder->where($order_id, [
+                'status' => 'Awaiting Payment',
+                'total_price' => $totalPrice
+            ]);
+
+            return redirect('orders')->with('success', 'data order added successfully');
+        } else {
+            return redirect()->back()->with('error', 'please contact admin to check stock availability');
+        }
     }
 
     public function delete($cart_id)

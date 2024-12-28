@@ -71,7 +71,7 @@ class AuthController extends BaseController
         ]);
 
         if (!$validation) {
-            return redirect()->back()->with('errors', $this->validator->getErrors());
+            return redirect()->back()->with('error', $this->validator->getErrors());
         }
 
         $email = $this->request->getPost('email');
@@ -81,14 +81,16 @@ class AuthController extends BaseController
         $user = $this->modelUser->where('email', $email)->first();
 
         if (!$user) {
-            return redirect()->back()->with('errors', ['email' => 'Invalid email or password']);
+            // dd('error email ga ada');
+            return redirect()->back()->with('error', 'Invalid email or password');
         }
-
+        
         // checking password
         $pwd_verify = password_verify($password, $user['password']);
-
+        
         if (!$pwd_verify) {
-            return redirect()->back()->with('errors', ['password' => 'Invalid email or password']);
+            dd('error password salah');
+            return redirect()->back()->with('error', 'Invalid email or password');
         }
 
         // creating session

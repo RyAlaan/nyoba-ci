@@ -24,7 +24,7 @@ class Orders extends Migration
             ],
             'status' => [
                 'type' => 'ENUM',
-                'constraint' => ['pending', 'processing', 'shipped', 'completed', 'cancelled'],
+                'constraint' => ['pending', 'Awaiting Payment', 'Processing', 'Shipped', 'Completed', 'Cancelled'],
                 'default' => 'pending',
             ],
             'created_at' => [

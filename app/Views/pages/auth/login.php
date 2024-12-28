@@ -4,13 +4,13 @@
 
 <form class="col-md-8 h-100 d-flex flex-column align-items-center justify-content-center" action="<?php echo base_url('/auth/login'); ?>" method="post">
 
-    <?php if (session()->getFlashdata('error')): ?>
-        <div class="alert alert-danger">
-            <div class="p-3 bg-danger rounded">
-                <p class="font-weight-bold text-white text-md"> <?= session()->getFlashdata('error') ?> </p>
-            </div>
+    <?php if (session()->getFlashdata('error')) : ?>
+        <div class="col-6 alert alert-danger alert-dismissible fade show" role="alert">
+            <?= esc(session()->getFlashdata('error')) ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
+
 
     <div class="w-50">
         <p class="text-muted">Welcome back!👋</p>
