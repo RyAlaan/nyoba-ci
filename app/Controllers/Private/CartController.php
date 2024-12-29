@@ -105,7 +105,7 @@ class CartController extends BaseController
         $totalPrice = 0;
         $order_id = Uuid::uuid4()->toString();
 
-        $this->modelOrder->create([
+        $this->modelOrder->insert([
             'id' => $order_id,
             'user_id' => $user_id,
             'total_price' => $totalPrice,
@@ -113,7 +113,7 @@ class CartController extends BaseController
         ]);
 
         foreach ($data as $product_id) {
-            $product = $this->modelProduct->where('id', $product_id)->find();
+            $product = $this->modelProduct->where('id', $product_id)->first();
 
             if ($quantities[$product_id] <= $product['stock']) {
                 $this->modelOrderItem->insert([
@@ -126,12 +126,12 @@ class CartController extends BaseController
                 $totalPrice += $product['price'] * $quantities[$product_id];
 
                 $this->modelCart->where('user_id', $user_id)->where('product_id', $product_id)->delete();
-                $this->modelProduct->where('product_id', $product_id)->update(['stock' => $product['stock'] - $quantities[$product_id]]);
+                $this->modelProduct->update($product_id, ['stock' => $product['stock'] - $quantities[$product_id]]);
             }
         }
 
         if ($totalPrice > 0) {
-            $this->modelOrder->where($order_id, [
+            $this->modelOrder->update($order_id, [
                 'status' => 'Awaiting Payment',
                 'total_price' => $totalPrice
             ]);

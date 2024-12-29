@@ -41,7 +41,7 @@ class Orders extends Migration
             ],
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->addForeignKey('user_id', 'users', 'id', 'CASCADE', 'NO ACTION');
+        $this->forge->addForeignKey('user_id', 'users', 'id', 'CASCADE', 'SET NULL');
         $this->forge->createTable('orders');
     }
 

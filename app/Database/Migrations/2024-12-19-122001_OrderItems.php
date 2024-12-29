@@ -10,8 +10,9 @@ class OrderItems extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'VARCHAR',
-                'constraint' => 255,
+                'type' => 'BIGINT',
+                'unsigned' => true,
+                'auto_increment' => true,
             ],
             'order_id' => [
                 'type' => 'VARCHAR',
@@ -43,7 +44,7 @@ class OrderItems extends Migration
         ]);
         $this->forge->addPrimaryKey('id');
         $this->forge->addForeignKey('product_id', 'products', 'id', 'CASCADE', 'NO ACTION');
-        $this->forge->addForeignKey('order_id  ', 'orders', 'id', 'CASCADE', 'RESTRICT');
+        $this->forge->addForeignKey('order_id  ', 'orders', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('order_items');
     }
 

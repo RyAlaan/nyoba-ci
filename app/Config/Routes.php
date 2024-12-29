@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\OrderController;
 use App\Controllers\Private\CartController;
 use App\Controllers\Private\DashboardCategory;
 use App\Controllers\Private\DashboardController;
@@ -38,6 +39,9 @@ $routes->group('/', ['filter' => 'authFilter'], function ($routes) {
 
     $routes->get('profile', [ProfileController::class, 'index']);
     $routes->put('profile', [ProfileController::class, 'update']);
+
+    $routes->get('orders', [OrderController::class, 'index']);
+    $routes->get('(:any)', [OrderController::class, 'show/$1']);
 
     $routes->get('auth/logout', 'AuthController::Logout');
 });

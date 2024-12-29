@@ -55,7 +55,7 @@ class Products extends Migration
             ],
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->addForeignKey('category_id', 'categories', 'id', 'CASCADE', 'NO ACTION');
+        $this->forge->addForeignKey('category_id', 'categories', 'id', 'CASCADE', 'SET NULL');
         $this->forge->createTable('products');
     }
 

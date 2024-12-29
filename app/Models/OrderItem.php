@@ -48,4 +48,9 @@ class OrderItem extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function products()
+    {
+        return $this->select('order_items.*, products.name AS product_name, products.image AS product_image, products.price AS product_price')->join('products', 'products.id = order_items.product_id', 'left');
+    }
 }
