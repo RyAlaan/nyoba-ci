@@ -5,17 +5,20 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class OrderController extends BaseController
 {
     protected $modelOrder;
     protected $modelOrderItem;
+    protected $modelProduct;
 
     public function __construct()
     {
         $this->modelOrder = new Order();
         $this->modelOrderItem = new OrderItem();
+        $this->modelProduct = new Product();
     }
 
     public function index()
@@ -28,8 +31,10 @@ class OrderController extends BaseController
 
     public function show($order_id)
     {
-        $orderItems = $this->modelOrderItem->where('order_id', $order_id)->products()->findAll();
+        $orderItem = $this->modelOrderItem->where('order_id', $order_id)->first();
 
-        return view('pages/private/order/detail', ['orderItems' => $orderItems]);
+        $orderItem['products'] = $this->modelProduct->where('id', $orderItem['product_id'])->findAll();
+
+        return view('pages/private/order/detail', ['orderItem' => $orderItem]);
     }
 }

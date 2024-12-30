@@ -22,6 +22,9 @@
                     <a href="<?= site_url('/carts') ?>" class="nav-link" aria-current="page">Cart</a>
                 </li>
                 <li class="nav-item">
+                    <a href="<?= site_url('/orders') ?>" class="nav-link" aria-current="page">Order</a>
+                </li>
+                <li class="nav-item">
                     <a href="<?= session()->get('id') ? site_url('auth/logout') : site_url('auth/login') ?>" class="nav-link" aria-current="page"><?= session()->get('id') ? 'Logout' : 'Login' ?></a>
                 </li>
             </ul>

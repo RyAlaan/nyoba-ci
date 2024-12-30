@@ -49,10 +49,18 @@
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
+                        <?php else : ?>
+                            <tr>
+                                <td colspan="5" class="py-5 text-center">
+                                    <p>Your cart list is empty.</p>
+                                </td>
+                            </tr>
                         <?php endif ?>
                     </tbody>
                 </table>
-                <button type="submit" class="btn btn-primary">Order</button>
+                <?php if ($carts) : ?>
+                    <button type="submit" class="btn btn-primary">Order</button>
+                <?php endif; ?>
             </form>
         </div>
     </div>

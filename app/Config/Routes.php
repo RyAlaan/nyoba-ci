@@ -41,7 +41,7 @@ $routes->group('/', ['filter' => 'authFilter'], function ($routes) {
     $routes->put('profile', [ProfileController::class, 'update']);
 
     $routes->get('orders', [OrderController::class, 'index']);
-    $routes->get('(:any)', [OrderController::class, 'show/$1']);
+    $routes->get('orders/(:any)', [OrderController::class, 'show/$1']);
 
     $routes->get('auth/logout', 'AuthController::Logout');
 });

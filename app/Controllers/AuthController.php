@@ -81,7 +81,6 @@ class AuthController extends BaseController
         $user = $this->modelUser->where('email', $email)->first();
 
         if (!$user) {
-            // dd('error email ga ada');
             return redirect()->back()->with('error', 'Invalid email or password');
         }
         
@@ -89,7 +88,6 @@ class AuthController extends BaseController
         $pwd_verify = password_verify($password, $user['password']);
         
         if (!$pwd_verify) {
-            dd('error password salah');
             return redirect()->back()->with('error', 'Invalid email or password');
         }
 
